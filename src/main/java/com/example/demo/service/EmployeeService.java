@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.custom.exception.EmptyInputException;
 import com.example.demo.entity.Employee;
 import com.example.demo.repo.EmployeeCrudRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class EmployeeService implements EmployeeServiceInterface {
 
         @Override
         public Employee addEmployee(Employee employee) {
+            if (employee.getName().isEmpty() || employee.getName().length() == 0)
+                throw new EmptyInputException("601","Input is empty");
             Employee savedEmployee = crudRepo.save(employee);
             return savedEmployee;
         }
